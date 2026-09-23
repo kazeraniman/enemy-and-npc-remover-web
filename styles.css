@@ -44,3 +44,7 @@ button {
 button:disabled {
     cursor: not-allowed;
 }
+
+#available-filter {
+    margin-bottom: 10px;
+}

@@ -2,6 +2,7 @@
 let idsResponse = await fetch('./res/ids.json');
 let available = await idsResponse.json();
 sortEntries(available);
+let filteredAvailable = available.slice();
 
 // Prepare the tables
 let availableTable = document.getElementById('available-table');
@@ -19,18 +20,23 @@ clearButton.addEventListener('click', () => {
     updateTables();
 });
 
+// Prepare filtering
+let filterText = document.getElementById('available-filter');
+filterText.addEventListener('input', debounce(updateAvailableTable, 500));
+
 // Set up the initial availability
 updateTables();
 
 /**
  * Update the data displayed by a table given the backing entries.
  * @param table The table to modify.
- * @param entries The entries to display.
+ * @param filteredEntries The entries to display.
+ * @param masterEntries The entries from which `filteredEntries` is filtered.
  */
-function updateTable(table, entries) {
+function updateTable(table, filteredEntries, masterEntries = null) {
     let tableBody = table.querySelector('tbody');
     tableBody.innerHTML = '';
-    entries.forEach(npc => {
+    filteredEntries.forEach(npc => {
         let row = tableBody.insertRow();
         row.className = 'entry-row';
 
@@ -64,7 +70,7 @@ function updateTable(table, entries) {
         row.dataset.data = npc;
 
         nameCell.addEventListener('click', () => {
-            swapTable(npc, entries);
+            swapTable(npc, masterEntries ?? filteredEntries);
         });
     });
 }
@@ -73,7 +79,9 @@ function updateTable(table, entries) {
  * Update the data displayed by the "available" table.
  */
 function updateAvailableTable() {
-    updateTable(availableTable, available);
+    let search = filterText.value.trim().toLocaleLowerCase();
+    filteredAvailable = available.filter(npc => !search || npc.name.toLocaleLowerCase().includes(search) || npc.tags.some(tag => tag.toLocaleLowerCase().includes(search)));
+    updateTable(availableTable, filteredAvailable, available);
 }
 
 /**
@@ -112,9 +120,26 @@ function swapTable(targetEntry, entries) {
 }
 
 /**
- * Sort the entries in alphabetical order.
+ * Sort the entries in alphabetical order, then tie-break with the ID.
  * @param entries The entries to sort.
  */
 function sortEntries(entries) {
-    entries.sort((a, b) => a.name.localeCompare(b.name));
+    entries.sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
+}
+
+/**
+ * Delay and batch calls of a function to prevent spam.
+ * @param func The function to call.
+ * @param delay The amount of time to wait, in milliseconds.
+ * @returns {(function(...[*]): void)|*}
+ */
+function debounce(func, delay) {
+    let timeout;
+
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            func.apply(this, args)
+        }, delay);
+    }
 }
