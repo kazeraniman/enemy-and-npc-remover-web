@@ -88,15 +88,17 @@ h2::before {
 .header-container {
     position: relative;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    gap: 0.5rem;
     margin-bottom: 2rem;
-    padding-bottom: 1rem;
+    padding-bottom: 1.25rem;
     border-bottom: 1px solid var(--border-color);
 }
 
 .github-link {
     position: absolute;
+    top: 0;
     right: 0;
     color: var(--text-muted);
     transition: color 0.2s ease, transform 0.2s ease, filter 0.2s ease;
@@ -106,7 +108,6 @@ h2::before {
 
 .github-link:hover {
     color: var(--accent-gold);
-    transform: translateY(-1px);
     filter: drop-shadow(0 0 6px var(--accent-gold-dim));
 }
 
@@ -325,4 +326,21 @@ button:disabled {
 #download-button:disabled {
     background-color: var(--border-color);
     color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Stats
+   ========================================================================== */
+.stat-counter {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+}
+
+.tarnished-count {
+    color: var(--accent-gold);
+    font-weight: 700;
 }

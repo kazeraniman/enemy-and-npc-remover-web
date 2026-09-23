@@ -1,5 +1,12 @@
 // Constants
 const FILE_NAMES = ['name.anibnd.dcx', 'name.chrbnd.dcx', 'name_h.texbnd.dcx', 'name_l.texbnd.dcx'];
+const COUNTER_API_BASE_URL = 'https://abacus.jasoncameron.dev'
+const COUNTER_NAMESPACE = 'elden-ring-enemy-and-npc-remover';
+const COUNTER_API_URL = (counterName, endpoint) => `${COUNTER_API_BASE_URL}/${endpoint}/${COUNTER_NAMESPACE}/${counterName}`;
+const COUNTER_VISIT_KEY = 'visittest';
+const COUNTER_DOWNLOAD_KEY = 'downloadtest';
+const VISIT_ELEMENT_ID = 'visitor-count';
+const DOWNLOAD_ELEMENT_ID = 'download-count'
 
 // Load the available options
 let idsResponse = await fetch('./res/ids.json');
@@ -61,6 +68,8 @@ downloadButton.addEventListener('click', async () => {
         downloadLink.remove();
         URL.revokeObjectURL(downloadUrl);
     }, 100);
+
+    await incrementDownloadCounter();
 });
 
 // Prepare filtering
@@ -69,6 +78,14 @@ filterText.addEventListener('input', debounce(updateAvailableTable, 500));
 
 // Set up the initial availability
 updateTables();
+
+// Display the counters
+await Promise.all(
+    [
+        incrementVisitCounter(),
+        getDownloadCounter()
+    ]
+);
 
 /**
  * Update the data displayed by a table given the backing entries.
@@ -178,10 +195,74 @@ function sortEntries(entries) {
 }
 
 /**
+ * Updates the HTML element with the provided counter.
+ * @param counter The value to display.
+ * @param id The ID of the element to modify.
+ */
+function updateCounter(counter, id) {
+    let counterElement = document.getElementById(id);
+    counterElement.textContent = counter;
+}
+
+/**
+ * Gets the provided counter, then updates it in the webpage.
+ * @param counterName The counter to increment.
+ * @param id The HTML element to update.
+ * @returns {Promise<void>}
+ */
+async function getCounter(counterName, id) {
+    const counter = await makeGetCounterCall(counterName);
+    updateCounter(counter, id);
+}
+
+/**
+ * Increments the provided counter, then updates it in the webpage.
+ * @param counterName The counter to increment.
+ * @param id The HTML element to update.
+ * @returns {Promise<void>}
+ */
+async function incrementCounter(counterName, id) {
+    const counter = await makeIncrementCounterCall(counterName);
+    updateCounter(counter, id);
+}
+
+/**
+ * Gets the visit counter, then updates it in the webpage.
+ * @returns {Promise<void>}
+ */
+async function getVisitCounter() {
+    await getCounter(COUNTER_VISIT_KEY, VISIT_ELEMENT_ID);
+}
+
+/**
+ * Increments the visit counter, then updates it in the webpage.
+ * @returns {Promise<void>}
+ */
+async function incrementVisitCounter() {
+    await incrementCounter(COUNTER_VISIT_KEY, VISIT_ELEMENT_ID);
+}
+
+/**
+ * Gets the download counter, then updates it in the webpage.
+ * @returns {Promise<void>}
+ */
+async function getDownloadCounter() {
+    await getCounter(COUNTER_DOWNLOAD_KEY, DOWNLOAD_ELEMENT_ID);
+}
+
+/**
+ * Increments the visit counter, then updates it in the webpage.
+ * @returns {Promise<void>}
+ */
+async function incrementDownloadCounter() {
+    await incrementCounter(COUNTER_DOWNLOAD_KEY, DOWNLOAD_ELEMENT_ID);
+}
+
+/**
  * Delay and batch calls of a function to prevent spam.
  * @param func The function to call.
  * @param delay The amount of time to wait, in milliseconds.
- * @returns {(function(...[*]): void)|*}
+ * @returns {(function(...[*]): void)|*} The function with a debounce wrapper.
  */
 function debounce(func, delay) {
     let timeout;
@@ -191,5 +272,50 @@ function debounce(func, delay) {
         timeout = setTimeout(() => {
             func.apply(this, args)
         }, delay);
+    }
+}
+
+/**
+ * Increments the provided counter and returns its value.
+ * @param counterName The counter to increment and get.
+ * @returns {Promise<number|*|undefined>} The counter's value, post-increment.
+ */
+async function makeIncrementCounterCall(counterName) {
+    return await makeCounterCall(counterName, 'hit');
+}
+
+/**
+ * Gets the value of the provided counter.
+ * @param counterName The counter to get.
+ * @returns {Promise<number|*|undefined>} The counter's value.
+ */
+async function makeGetCounterCall(counterName) {
+    return await makeCounterCall(counterName, 'get');
+}
+
+/**
+ * Makes and API call to work with a counter.
+ * @param counterName The counter to use.
+ * @param endpoint The endpoint to hit.
+ * @returns {Promise<*|number>} The counter's value.
+ */
+async function makeCounterCall(counterName, endpoint) {
+    try {
+        const response = await fetch(COUNTER_API_URL(counterName, endpoint), {
+            method: 'GET',
+            cache: 'no-cache'
+        });
+        if (!response.ok) {
+            return 0;
+        }
+
+        const data = await response.json();
+        if (!(data && typeof data.value === 'number')) {
+            return 0;
+        }
+
+        return data.value;
+    } catch (_) {
+        return 0;
     }
 }
