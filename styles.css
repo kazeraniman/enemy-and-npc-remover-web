@@ -59,10 +59,7 @@ h1 {
     color: var(--accent-gold);
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 2rem;
     text-align: center;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
 }
 
 h2 {
@@ -83,6 +80,34 @@ h2::before {
     height: 1rem;
     background-color: var(--accent-gold);
     border-radius: 2px;
+}
+
+/* ==========================================================================
+   Top-matter
+   ========================================================================== */
+.header-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.github-link {
+    position: absolute;
+    right: 0;
+    color: var(--text-muted);
+    transition: color 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.github-link:hover {
+    color: var(--accent-gold);
+    transform: translateY(-1px);
+    filter: drop-shadow(0 0 6px var(--accent-gold-dim));
 }
 
 /* ==========================================================================
