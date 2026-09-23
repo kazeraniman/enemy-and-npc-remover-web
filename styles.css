@@ -1,0 +1,22 @@
+.table-container {
+    height: 250px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background-color: #FFFFFF;
+    z-index: 1;
+}
+
+tbody td {
+    padding: 10px;
+}
+
+.info-link {
+    text-decoration: none;
+    line-height: 1;
+    font-size: 1.5rem;
+}

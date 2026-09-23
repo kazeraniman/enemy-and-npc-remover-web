@@ -17,18 +17,37 @@ updateAvailableTable();
  * @param entries The entries to display.
  */
 function updateTable(table, entries) {
-    table.innerHTML = '';
+    let tableBody = table.getElementsByTagName('tbody');
+    tableBody.innerHTML = '';
     entries.forEach(npc => {
         let row = table.insertRow();
+
         let nameCell = row.insertCell(0);
+        let name = npc.name;
+        if (npc.tags.includes('sote')) {
+            name += ' (DLC)';
+        }
+        nameCell.innerText = name;
+        row.dataset.name = name;
+
         let idCell = row.insertCell(1);
-        let tagsCell = row.insertCell(2);
-        nameCell.innerText = npc.name;
-        row.dataset.name = npc.name;
         idCell.innerText = npc.id;
         row.dataset.id = npc.id;
-        tagsCell.innerText = npc.tags.join(", ");
-        row.dataset.id = npc.id;
+
+        let tagsCell = row.insertCell(2);
+        let tags = npc.tags.join(", ");
+        tagsCell.innerText = tags;
+        row.dataset.tags = tags;
+
+        let actionsCell = row.insertCell(3);
+        let infoLink = document.createElement('a');
+        infoLink.className = 'info-link';
+        infoLink.href = `https://eldenring.wiki.gg/wiki/Special:Search?search=${npc.name}&go=Go&ns0=1`;
+        infoLink.target = '_blank';
+        infoLink.innerHTML = '  &#128712;  ';
+        infoLink.title = 'Search on Wiki';
+        actionsCell.appendChild(infoLink);
+
         row.dataset.data = npc;
     });
 }
