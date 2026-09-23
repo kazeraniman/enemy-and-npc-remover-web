@@ -8,8 +8,19 @@ let availableTable = document.getElementById('available-table');
 let replacedTable = document.getElementById('replaced-table');
 let replaced = [];
 
+// Prepare the buttons
+let clearButton = document.getElementById('clear-button');
+clearButton.addEventListener('click', () => {
+    replaced.forEach(npc => {
+        available.push(npc);
+    });
+    replaced.length = 0;
+    sortEntries(available);
+    updateTables();
+});
+
 // Set up the initial availability
-updateAvailableTable();
+updateTables();
 
 /**
  * Update the data displayed by a table given the backing entries.
@@ -70,6 +81,15 @@ function updateAvailableTable() {
  */
 function updateReplacedTable() {
     updateTable(replacedTable, replaced);
+    clearButton.disabled = replaced.length === 0;
+}
+
+/**
+ * Update both of the tables.
+ */
+function updateTables() {
+    updateAvailableTable();
+    updateReplacedTable();
 }
 
 /**
@@ -88,8 +108,7 @@ function swapTable(targetEntry, entries) {
         sortEntries(available);
     }
 
-    updateAvailableTable();
-    updateReplacedTable();
+    updateTables();
 }
 
 /**
