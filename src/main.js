@@ -1,7 +1,7 @@
 // Load the available options
 let idsResponse = await fetch('./res/ids.json');
 let available = await idsResponse.json();
-available.sort((a, b) => a.name.localeCompare(b.name));
+sortEntries(available);
 
 // Prepare the tables
 let availableTable = document.getElementById('available-table');
@@ -17,16 +17,18 @@ updateAvailableTable();
  * @param entries The entries to display.
  */
 function updateTable(table, entries) {
-    let tableBody = table.getElementsByTagName('tbody');
+    let tableBody = table.querySelector('tbody');
     tableBody.innerHTML = '';
     entries.forEach(npc => {
-        let row = table.insertRow();
+        let row = tableBody.insertRow();
+        row.className = 'entry-row';
 
         let nameCell = row.insertCell(0);
         let name = npc.name;
         if (npc.tags.includes('sote')) {
             name += ' (DLC)';
         }
+        nameCell.className = 'name-cell';
         nameCell.innerText = name;
         row.dataset.name = name;
 
@@ -49,6 +51,10 @@ function updateTable(table, entries) {
         actionsCell.appendChild(infoLink);
 
         row.dataset.data = npc;
+
+        nameCell.addEventListener('click', () => {
+            swapTable(npc, entries);
+        });
     });
 }
 
@@ -64,4 +70,32 @@ function updateAvailableTable() {
  */
 function updateReplacedTable() {
     updateTable(replacedTable, replaced);
+}
+
+/**
+ * Swaps an entry from one table to the other.
+ * @param targetEntry The entity to swap.
+ * @param entries The collection of entries to which it currently belongs.
+ */
+function swapTable(targetEntry, entries) {
+    let targetIndex = entries.findIndex(entry => entry.id === targetEntry.id);
+    entries.splice(targetIndex, 1);
+    if (entries === available) {
+        replaced.push(targetEntry);
+        sortEntries(replaced);
+    } else {
+        available.push(targetEntry);
+        sortEntries(available);
+    }
+
+    updateAvailableTable();
+    updateReplacedTable();
+}
+
+/**
+ * Sort the entries in alphabetical order.
+ * @param entries The entries to sort.
+ */
+function sortEntries(entries) {
+    entries.sort((a, b) => a.name.localeCompare(b.name));
 }

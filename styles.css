@@ -4,6 +4,10 @@
     margin-bottom: 10px;
 }
 
+table {
+    border-collapse: collapse;
+}
+
 thead th {
     position: sticky;
     top: 0;
@@ -15,8 +19,20 @@ tbody td {
     padding: 10px;
 }
 
+tbody tr:nth-child(even) {
+    background-color: #F5F5F5;
+}
+
 .info-link {
     text-decoration: none;
     line-height: 1;
     font-size: 1.5rem;
+}
+
+.entry-row:hover {
+    background-color: #dfefff;
+}
+
+.name-cell {
+    cursor: pointer;
 }
