@@ -11,13 +11,6 @@ table {
     table-layout: fixed;
 }
 
-thead th {
-    position: sticky;
-    top: 0;
-    background-color: #FFFFFF;
-    z-index: 1;
-}
-
 tbody td {
     padding: 10px;
 }
@@ -54,11 +47,6 @@ button:disabled {
 
 #available-filter {
     margin-bottom: 10px;
-}
-
-th {
-    text-align: left;
-    padding: 10px;
 }
 
 .col-name {
