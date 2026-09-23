@@ -113,9 +113,13 @@ function updateTable(table, filteredEntries, masterEntries = null) {
 
         row.dataset.data = npc;
 
-        nameCell.addEventListener('click', () => {
+        const clickHandler = () => {
             swapTable(npc, masterEntries ?? filteredEntries);
-        });
+        };
+
+        nameCell.addEventListener('click', clickHandler);
+        idCell.addEventListener('click', clickHandler);
+        tagsCell.addEventListener('click', clickHandler);
     }
 }
 
