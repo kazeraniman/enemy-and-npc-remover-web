@@ -1,3 +1,6 @@
+// Constants
+const FILE_NAMES = ['name.anibnd.dcx', 'name.chrbnd.dcx', 'name_h.texbnd.dcx', 'name_l.texbnd.dcx'];
+
 // Load the available options
 let idsResponse = await fetch('./res/ids.json');
 let available = await idsResponse.json();
@@ -11,13 +14,53 @@ let replaced = [];
 
 // Prepare the buttons
 let clearButton = document.getElementById('clear-button');
+let downloadButton = document.getElementById('download-button');
+let replacementType = document.getElementById('replacement-type');
+
 clearButton.addEventListener('click', () => {
-    replaced.forEach(npc => {
+    for (const npc of replaced) {
         available.push(npc);
-    });
+    }
+
     replaced.length = 0;
     sortEntries(available);
     updateTables();
+});
+
+downloadButton.addEventListener('click', async () => {
+    let basePath = `./res/${replacementType.value}/`
+    let baseFiles = await Promise.all(
+        FILE_NAMES.map(async (fileName) => {
+            let filePath = await fetch(`${basePath}/${fileName}`);
+            return await filePath.blob();
+        })
+    );
+
+    let replacementFiles = replaced.flatMap(npc => {
+        return baseFiles.map((baseFile, i) => new File([baseFile], FILE_NAMES[i].replace('name', npc.id)));
+    });
+
+    let zip = new JSZip();
+    for (const file of replacementFiles) {
+        zip.file(file.name, file);
+    }
+
+    const now = new Date();
+    const pad = (num) => String(num).padStart(2, '0');
+    const localTimestamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+    let downloadableFile = await zip.generateAsync({type: 'blob'});
+    let downloadUrl = URL.createObjectURL(downloadableFile);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = downloadUrl;
+    downloadLink.download = `replacements_${localTimestamp}.zip`;
+    document.body.appendChild(downloadLink);
+
+    downloadLink.click();
+
+    setTimeout(() => {
+        downloadLink.remove();
+        URL.revokeObjectURL(downloadUrl);
+    }, 100);
 });
 
 // Prepare filtering
@@ -36,7 +79,7 @@ updateTables();
 function updateTable(table, filteredEntries, masterEntries = null) {
     let tableBody = table.querySelector('tbody');
     tableBody.innerHTML = '';
-    filteredEntries.forEach(npc => {
+    for (const npc of filteredEntries) {
         let row = tableBody.insertRow();
         row.className = 'entry-row';
 
@@ -73,7 +116,7 @@ function updateTable(table, filteredEntries, masterEntries = null) {
         nameCell.addEventListener('click', () => {
             swapTable(npc, masterEntries ?? filteredEntries);
         });
-    });
+    }
 }
 
 /**
@@ -90,7 +133,9 @@ function updateAvailableTable() {
  */
 function updateReplacedTable() {
     updateTable(replacedTable, replaced);
-    clearButton.disabled = replaced.length === 0;
+    let areButtonsDisabled = replaced.length === 0;
+    clearButton.disabled = areButtonsDisabled;
+    downloadButton.disabled = areButtonsDisabled;
 }
 
 /**

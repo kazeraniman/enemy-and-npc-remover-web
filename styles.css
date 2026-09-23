@@ -1,9 +1,10 @@
 .table-container {
     height: 250px;
     overflow-y: auto;
-    margin-bottom: 10px;
     width: 50%;
     min-width: 500px;
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 table {
@@ -45,10 +46,6 @@ button:disabled {
     cursor: not-allowed;
 }
 
-#available-filter {
-    margin-bottom: 10px;
-}
-
 .col-name {
     width: 70%;
 }
@@ -63,4 +60,15 @@ button:disabled {
 
 .col-info {
     width: 50px;
+}
+
+#button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.bot-gap {
+    margin-bottom: 10px;
 }

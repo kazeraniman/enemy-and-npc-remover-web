@@ -5,27 +5,14 @@
     <title>Elden Ring Enemy and NPC Remover</title>
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="src/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.2/jszip.min.js" integrity="sha512-/ICos1xr6gGjsbC2d7Z6D0hmKAnNbkCv5Pp803Q75xgHowbEcgI4CVOHMHUux/ZorCuod6dzuJOjfNoCKV0tRw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 </head>
 <body>
 <h1>Elden Ring Enemy and NPC Remover</h1>
 
-<h2>Replaced Enemies / NPCs</h2>
-<div class="table-container">
-    <table id="replaced-table">
-        <colgroup>
-            <col class="col-name">
-            <col class="col-id">
-            <col class="col-tags">
-            <col class="col-info">
-        </colgroup>
-        <tbody></tbody>
-    </table>
-</div>
-<button id="clear-button">Clear</button>
-
 <h2>Available Enemies / NPCs</h2>
-<input id="available-filter" type="text" placeholder="Search by name or tag..." />
-<div class="table-container">
+<input id="available-filter" class="bot-gap" type="text" placeholder="Search by name or tag..." />
+<div class="table-container bot-gap">
     <table id="available-table">
         <colgroup>
             <col class="col-name">
@@ -36,6 +23,30 @@
         <tbody></tbody>
     </table>
 </div>
-<button id="download-button">Download Replacements</button>
+
+<h2>Replaced Enemies / NPCs</h2>
+<div class="bot-gap">
+    <label for="replacement-type">Replacement Type</label>
+    <select id="replacement-type">
+        <option value="turtle" selected>Turtle</option>
+        <option value="empty">Empty</option>
+    </select>
+</div>
+<div class="table-container bot-gap">
+    <table id="replaced-table">
+        <colgroup>
+            <col class="col-name">
+            <col class="col-id">
+            <col class="col-tags">
+            <col class="col-info">
+        </colgroup>
+        <tbody></tbody>
+    </table>
+</div>
+
+<div id="button-container">
+    <button id="clear-button">Clear</button>
+    <button id="download-button">Download Replacements</button>
+</div>
 </body>
 </html>
