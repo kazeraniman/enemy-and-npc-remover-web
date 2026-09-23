@@ -1,4 +1,5 @@
 // Constants
+const MINIMUM_LOAD_MS = 1000;
 const FILE_NAMES = ['name.anibnd.dcx', 'name.chrbnd.dcx', 'name_h.texbnd.dcx', 'name_l.texbnd.dcx'];
 const COUNTER_API_BASE_URL = 'https://abacus.jasoncameron.dev'
 const COUNTER_NAMESPACE = 'elden-ring-enemy-and-npc-remover';
@@ -8,9 +9,19 @@ const COUNTER_DOWNLOAD_KEY = 'downloadtest';
 const VISIT_ELEMENT_ID = 'visitor-count';
 const DOWNLOAD_ELEMENT_ID = 'download-count'
 
+// Prepare to load
+const delay = (waitMs) => new Promise(resolve => setTimeout(resolve, waitMs));
+const loadStartTime = performance.now();
+
 // Load the available options
-let idsResponse = await fetch('./res/ids.json');
-let available = await idsResponse.json();
+let available;
+await Promise.all(
+    [
+        loadReplacementOptions(),
+        incrementVisitCounter(),
+        getDownloadCounter()
+    ]
+);
 sortEntries(available);
 let filteredAvailable = available.slice();
 
@@ -79,13 +90,21 @@ filterText.addEventListener('input', debounce(updateAvailableTable, 500));
 // Set up the initial availability
 updateTables();
 
-// Display the counters
-await Promise.all(
-    [
-        incrementVisitCounter(),
-        getDownloadCounter()
-    ]
-);
+// Complete loading
+const loadTime = performance.now() - loadStartTime;
+const waitTime = Math.max(0, MINIMUM_LOAD_MS - loadTime);
+await delay(waitTime);
+let loader = document.getElementById('page-loader');
+loader.classList.add('hidden');
+
+/**
+ * Load all the replacement options.
+ * @returns {Promise<any>} The list of replacement options.
+ */
+async function loadReplacementOptions() {
+    let idsResponse = await fetch('./res/ids.json');
+    available = await idsResponse.json();
+}
 
 /**
  * Update the data displayed by a table given the backing entries.
@@ -224,14 +243,6 @@ async function getCounter(counterName, id) {
 async function incrementCounter(counterName, id) {
     const counter = await makeIncrementCounterCall(counterName);
     updateCounter(counter, id);
-}
-
-/**
- * Gets the visit counter, then updates it in the webpage.
- * @returns {Promise<void>}
- */
-async function getVisitCounter() {
-    await getCounter(COUNTER_VISIT_KEY, VISIT_ELEMENT_ID);
 }
 
 /**
