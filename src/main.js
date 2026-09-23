@@ -59,6 +59,7 @@ function updateTable(table, filteredEntries, masterEntries = null) {
         row.dataset.tags = tags;
 
         let actionsCell = row.insertCell(3);
+        actionsCell.className = 'centred-cell';
         let infoLink = document.createElement('a');
         infoLink.className = 'info-link';
         infoLink.href = `https://eldenring.wiki.gg/wiki/Special:Search?search=${npc.name}&go=Go&ns0=1`;

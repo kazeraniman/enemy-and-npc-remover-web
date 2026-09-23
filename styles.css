@@ -2,10 +2,13 @@
     height: 250px;
     overflow-y: auto;
     margin-bottom: 10px;
+    width: 50%;
+    min-width: 500px;
 }
 
 table {
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 thead th {
@@ -37,6 +40,10 @@ tbody tr:nth-child(even) {
     cursor: pointer;
 }
 
+.centred-cell {
+    text-align: center;
+}
+
 button {
     cursor: pointer;
 }
@@ -47,4 +54,25 @@ button:disabled {
 
 #available-filter {
     margin-bottom: 10px;
+}
+
+th {
+    text-align: left;
+    padding: 10px;
+}
+
+.col-name {
+    width: 70%;
+}
+
+.col-id {
+    width: 75px;
+}
+
+.col-tags {
+    width: 30%;
+}
+
+.col-info {
+    width: 50px;
 }
