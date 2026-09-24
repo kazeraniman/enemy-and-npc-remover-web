@@ -1,6 +1,7 @@
 // Constants
 const IS_GITHUB_PAGES = window.location.hostname.endsWith('.github.io');
-const MINIMUM_LOAD_MS = 1000;
+const MINIMUM_INITIAL_LOAD_MS = 1000;
+const MINIMUM_DOWNLOAD_LOAD_MS = 600;
 const FILE_NAMES = ['name.anibnd.dcx', 'name.chrbnd.dcx', 'name_h.texbnd.dcx', 'name_l.texbnd.dcx'];
 const COUNTER_API_BASE_URL = 'https://abacus.jasoncameron.dev'
 const COUNTER_NAMESPACE = IS_GITHUB_PAGES ? 'elden-ring-enemy-and-npc-remover' : 'elden-ring-enemy-and-npc-remover-dev';
@@ -12,7 +13,7 @@ const DOWNLOAD_ELEMENT_ID = 'download-count'
 
 // Prepare to load
 const delay = (waitMs) => new Promise(resolve => setTimeout(resolve, waitMs));
-const loadStartTime = performance.now();
+let loadStartTime = performance.now();
 
 // Load the available options
 let available;
@@ -47,6 +48,8 @@ clearButton.addEventListener('click', () => {
 });
 
 downloadButton.addEventListener('click', async () => {
+    enableLoading('Bestowing Blessing...');
+
     const basePath = `./res/${replacementType.value}/`
     const baseFiles = await Promise.all(
         FILE_NAMES.map(async (fileName) => {
@@ -64,16 +67,18 @@ downloadButton.addEventListener('click', async () => {
         zip.file(file.name, file);
     }
 
+    const downloadableFile = await zip.generateAsync({type: 'blob'});
+
+    await disableLoading(MINIMUM_DOWNLOAD_LOAD_MS);
+
     const now = new Date();
     const pad = (num) => String(num).padStart(2, '0');
     const localTimestamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
-    const downloadableFile = await zip.generateAsync({type: 'blob'});
     const downloadUrl = URL.createObjectURL(downloadableFile);
     const downloadLink = document.createElement('a');
     downloadLink.href = downloadUrl;
     downloadLink.download = `replacements_${localTimestamp}.zip`;
     document.body.appendChild(downloadLink);
-
     downloadLink.click();
 
     setTimeout(() => {
@@ -82,6 +87,7 @@ downloadButton.addEventListener('click', async () => {
     }, 100);
 
     await incrementDownloadCounter();
+
 });
 
 // Prepare filtering
@@ -145,11 +151,39 @@ instructionsModal.addEventListener('click', (event) => {
 updateTables();
 
 // Complete loading
-const loadTime = performance.now() - loadStartTime;
-const waitTime = Math.max(0, MINIMUM_LOAD_MS - loadTime);
-await delay(waitTime);
 const loader = document.getElementById('page-loader');
-loader.classList.add('hidden');
+const loaderText = document.getElementById('loader-text');
+await disableLoading(MINIMUM_INITIAL_LOAD_MS);
+
+/**
+ * Set the loading state of the webpage.
+ * @param loadingMessage The message to display on the loading screen.
+ */
+function enableLoading(loadingMessage = 'Guiding Tarnished...') {
+    if (!loader.classList.contains('hidden')) {
+        return;
+    }
+
+    loadStartTime = performance.now();
+    loaderText.innerText = loadingMessage;
+    loader.classList.remove('hidden');
+    document.body.setAttribute('aria-busy', 'true');
+    if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+    }
+}
+
+async function disableLoading(minLoadingTime = 0) {
+    if (loader.classList.contains('hidden')) {
+        return;
+    }
+
+    const loadTime = performance.now() - loadStartTime;
+    const waitTime = Math.max(0, minLoadingTime - loadTime);
+    await delay(waitTime);
+    document.body.removeAttribute('aria-busy');
+    loader.classList.add('hidden');
+}
 
 /**
  * Load all the replacement options.

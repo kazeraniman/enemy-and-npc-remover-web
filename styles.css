@@ -390,6 +390,8 @@ button:disabled {
     justify-content: center;
     gap: 2rem;
     transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    pointer-events: auto;
+    cursor: wait;
 }
 
 .great-rune-loader {
@@ -454,7 +456,7 @@ button:disabled {
     animation: arcPulse 1.8s ease-in-out infinite alternate;
 }
 
-.loader-text {
+#loader-text {
     font-size: 0.85rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
