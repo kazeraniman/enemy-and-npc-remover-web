@@ -313,14 +313,15 @@ button {
 
 #clear-button {
     background-color: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
+    color: var(--accent-gold);
+    border: 1px solid var(--accent-gold);
 }
 
 #clear-button:hover:not(:disabled) {
-    background-color: var(--bg-surface-hover);
-    color: var(--text-primary);
-    border-color: var(--text-muted);
+    background-color: var(--accent-gold-dim);
+    color: var(--accent-gold-hover);
+    border-color: var(--accent-gold-hover);
+    box-shadow: 0 0 10px var(--accent-gold-dim);
 }
 
 #download-button {
@@ -331,10 +332,6 @@ button {
 #download-button:hover:not(:disabled) {
     background-color: var(--accent-gold-hover);
     box-shadow: 0 0 12px var(--accent-gold-dim);
-}
-
-#download-button:active:not(:disabled) {
-    transform: translateY(1px);
 }
 
 /* ==========================================================================
