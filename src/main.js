@@ -143,7 +143,13 @@ function updateTable(table, filteredEntries, masterEntries = null) {
         infoLink.className = 'info-link';
         infoLink.href = `https://eldenring.wiki.gg/wiki/Special:Search?search=${npc.name}&go=Go&ns0=1`;
         infoLink.target = '_blank';
-        infoLink.innerHTML = '  &#128712;  ';
+        infoLink.innerHTML = `
+          <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <circle cx="12" cy="8" r="1.25" fill="currentColor" stroke="none"></circle>
+          </svg>
+        `;
         infoLink.title = 'Search on Wiki';
         actionsCell.appendChild(infoLink);
 

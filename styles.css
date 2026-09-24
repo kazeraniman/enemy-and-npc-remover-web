@@ -232,19 +232,36 @@ td.col-tags {
     font-size: 0.82rem;
 }
 
+.centred-cell {
+    text-align: center;
+    vertical-align: middle;
+}
+
 .info-link {
     color: var(--accent-gold);
     text-decoration: none;
-    font-weight: bold;
-    padding: 2px 6px;
+    padding: 4px;
     border-radius: var(--radius-sm);
-    transition: background-color 0.2s ease;
-    line-height: 1;
-    font-size: 1.5rem;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    transform-origin: center center;
 }
 
 .info-link:hover {
     background-color: var(--accent-gold-dim);
+}
+
+.info-link:active {
+    transform: scale(0.95);
+}
+
+.info-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
 }
 
 tbody:empty::after {
