@@ -27,14 +27,14 @@ sortEntries(available);
 let filteredAvailable = available.slice();
 
 // Prepare the tables
-let availableTable = document.getElementById('available-table');
-let replacedTable = document.getElementById('replaced-table');
-let replaced = [];
+const availableTable = document.getElementById('available-table');
+const replacedTable = document.getElementById('replaced-table');
+const replaced = [];
 
 // Prepare the buttons
-let clearButton = document.getElementById('clear-button');
-let downloadButton = document.getElementById('download-button');
-let replacementType = document.getElementById('replacement-type');
+const clearButton = document.getElementById('clear-button');
+const downloadButton = document.getElementById('download-button');
+const replacementType = document.getElementById('replacement-type');
 
 clearButton.addEventListener('click', () => {
     for (const npc of replaced) {
@@ -47,19 +47,19 @@ clearButton.addEventListener('click', () => {
 });
 
 downloadButton.addEventListener('click', async () => {
-    let basePath = `./res/${replacementType.value}/`
-    let baseFiles = await Promise.all(
+    const basePath = `./res/${replacementType.value}/`
+    const baseFiles = await Promise.all(
         FILE_NAMES.map(async (fileName) => {
-            let filePath = await fetch(`${basePath}/${fileName}`);
+            const filePath = await fetch(`${basePath}/${fileName}`);
             return await filePath.blob();
         })
     );
 
-    let replacementFiles = replaced.flatMap(npc => {
+    const replacementFiles = replaced.flatMap(npc => {
         return baseFiles.map((baseFile, i) => new File([baseFile], FILE_NAMES[i].replace('name', npc.id)));
     });
 
-    let zip = new JSZip();
+    const zip = new JSZip();
     for (const file of replacementFiles) {
         zip.file(file.name, file);
     }
@@ -67,8 +67,8 @@ downloadButton.addEventListener('click', async () => {
     const now = new Date();
     const pad = (num) => String(num).padStart(2, '0');
     const localTimestamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
-    let downloadableFile = await zip.generateAsync({type: 'blob'});
-    let downloadUrl = URL.createObjectURL(downloadableFile);
+    const downloadableFile = await zip.generateAsync({type: 'blob'});
+    const downloadUrl = URL.createObjectURL(downloadableFile);
     const downloadLink = document.createElement('a');
     downloadLink.href = downloadUrl;
     downloadLink.download = `replacements_${localTimestamp}.zip`;
@@ -85,7 +85,7 @@ downloadButton.addEventListener('click', async () => {
 });
 
 // Prepare filtering
-let filterText = document.getElementById('available-filter');
+const filterText = document.getElementById('available-filter');
 filterText.addEventListener('input', debounce(updateAvailableTable, 500));
 
 // Set up the initial availability
@@ -95,7 +95,7 @@ updateTables();
 const loadTime = performance.now() - loadStartTime;
 const waitTime = Math.max(0, MINIMUM_LOAD_MS - loadTime);
 await delay(waitTime);
-let loader = document.getElementById('page-loader');
+const loader = document.getElementById('page-loader');
 loader.classList.add('hidden');
 
 /**
@@ -103,7 +103,7 @@ loader.classList.add('hidden');
  * @returns {Promise<any>} The list of replacement options.
  */
 async function loadReplacementOptions() {
-    let idsResponse = await fetch('./res/ids.json');
+    const idsResponse = await fetch('./res/ids.json');
     available = await idsResponse.json();
 }
 
@@ -114,13 +114,13 @@ async function loadReplacementOptions() {
  * @param masterEntries The entries from which `filteredEntries` is filtered.
  */
 function updateTable(table, filteredEntries, masterEntries = null) {
-    let tableBody = table.querySelector('tbody');
+    const tableBody = table.querySelector('tbody');
     tableBody.innerHTML = '';
     for (const npc of filteredEntries) {
-        let row = tableBody.insertRow();
+        const row = tableBody.insertRow();
         row.className = 'entry-row';
 
-        let nameCell = row.insertCell(0);
+        const nameCell = row.insertCell(0);
         let name = npc.name;
         if (npc.tags.includes('sote')) {
             name += ' (DLC)';
@@ -129,18 +129,18 @@ function updateTable(table, filteredEntries, masterEntries = null) {
         nameCell.innerText = name;
         row.dataset.name = name;
 
-        let idCell = row.insertCell(1);
+        const idCell = row.insertCell(1);
         idCell.innerText = npc.id;
         row.dataset.id = npc.id;
 
-        let tagsCell = row.insertCell(2);
-        let tags = npc.tags.join(", ");
+        const tagsCell = row.insertCell(2);
+        const tags = npc.tags.join(", ");
         tagsCell.innerText = tags;
         row.dataset.tags = tags;
 
-        let actionsCell = row.insertCell(3);
+        const actionsCell = row.insertCell(3);
         actionsCell.className = 'centred-cell';
-        let infoLink = document.createElement('a');
+        const infoLink = document.createElement('a');
         infoLink.className = 'info-link';
         infoLink.href = `https://eldenring.wiki.gg/wiki/Special:Search?search=${npc.name}&go=Go&ns0=1`;
         infoLink.target = '_blank';
@@ -170,7 +170,7 @@ function updateTable(table, filteredEntries, masterEntries = null) {
  * Update the data displayed by the "available" table.
  */
 function updateAvailableTable() {
-    let search = filterText.value.trim().toLocaleLowerCase();
+    const search = filterText.value.trim().toLocaleLowerCase();
     filteredAvailable = available.filter(npc => !search || npc.name.toLocaleLowerCase().includes(search) || npc.tags.some(tag => tag.toLocaleLowerCase().includes(search)));
     updateTable(availableTable, filteredAvailable, available);
 }
@@ -180,7 +180,7 @@ function updateAvailableTable() {
  */
 function updateReplacedTable() {
     updateTable(replacedTable, replaced);
-    let areButtonsDisabled = replaced.length === 0;
+    const areButtonsDisabled = replaced.length === 0;
     clearButton.disabled = areButtonsDisabled;
     downloadButton.disabled = areButtonsDisabled;
 }
@@ -199,7 +199,7 @@ function updateTables() {
  * @param entries The collection of entries to which it currently belongs.
  */
 function swapTable(targetEntry, entries) {
-    let targetIndex = entries.findIndex(entry => entry.id === targetEntry.id);
+    const targetIndex = entries.findIndex(entry => entry.id === targetEntry.id);
     entries.splice(targetIndex, 1);
     if (entries === available) {
         replaced.push(targetEntry);
@@ -226,7 +226,7 @@ function sortEntries(entries) {
  * @param id The ID of the element to modify.
  */
 function updateCounter(counter, id) {
-    let counterElement = document.getElementById(id);
+    const counterElement = document.getElementById(id);
     counterElement.textContent = counter;
 }
 
