@@ -22,6 +22,44 @@
     <span class="loader-text">Guiding Tarnished...</span>
 </div>
 
+<button id="open-instructions-btn" class="help-btn-floating" aria-label="Open Usage Instructions" title="Open Usage Instructions">
+    <svg class="help-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+</button>
+
+<dialog id="instructions-modal" class="instructions-modal">
+    <div class="modal-header">
+        <h2>Instructions</h2>
+        <button id="close-instructions-btn" class="modal-close-btn" aria-label="Close modal">&times;</button>
+    </div>
+
+    <div class="modal-body">
+        <section class="instruction-section">
+            <h3>Pre-requisites</h3>
+            <p>Make sure to install <a href="https://github.com/soulsmods/ModEngine2" target="_blank" rel="noopener noreferrer">ModEngine2</a> as that is what will use the generated files to replace the characters. Follow the instructions on their page.</p>
+        </section>
+
+        <section class="instruction-section">
+            <h3>Usage</h3>
+            <ol class="instruction-steps">
+                <li>Select what you would like to replace by clicking on the appropriate row in the <strong>"Available Enemies / NPCs"</strong> table. Feel free to use the search bar to filter to what you want, as well as clicking on the info icons to launch a search on the wiki to check what you want to replace.</li>
+                <li>Select what will replace your choices with the <strong>"Replacement Type"</strong> dropdown. Turtles are recommended as they reduce the chance of softlocks and loading issues.</li>
+                <li>Confirm your choices in the <strong>"Replaced Enemies / NPCs"</strong> table. You may remove choices by clicking on the appropriate row or use the <strong>"Clear"</strong> button to remove them all.</li>
+                <li>Click <strong>"Download Replacements"</strong> to download a zip file of all the files needed to perform the replacements. You can save this anywhere (the "Downloads" folder if you're indecisive); we'll be deleting it when we're done.</li>
+                <li>Extract the files in the zip file you just downloaded (right-click &rarr; "Extract All...").</li>
+                <li>Navigate to the extracted files and copy all of them. This should not include any folders; just the files. The only things copied should be <code>.dcx</code> files.</li>
+                <li>Navigate to the <code>mod</code> folder where you have installed ModEngine2. Please keep in mind this should be the <code>mod</code> folder inside ModEngine2, not the ModEngine2 folder itself.</li>
+                <li>Navigate to the <code>chr</code> folder inside the <code>mod</code> folder. If it does not exist, create it first. Ensure it is called exactly <code>chr</code>.</li>
+                <li>Paste all the copied files into this folder.</li>
+                <li>Launch your game the normal way you do with ModEngine2 and confirm that everything is working as intended. You will not need to follow the previous steps again unless you want to change the replacements.</li>
+            </ol>
+        </section>
+    </div>
+</dialog>
+
 <div class="header-container">
     <h1>Elden Ring Enemy and NPC Remover</h1>
     <a href="https://github.com/kazeraniman/enemy-and-npc-remover-web" target="_blank" rel="noopener noreferrer" class="github-link" title="View source code on GitHub">

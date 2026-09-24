@@ -88,6 +88,59 @@ downloadButton.addEventListener('click', async () => {
 const filterText = document.getElementById('available-filter');
 filterText.addEventListener('input', debounce(updateAvailableTable, 500));
 
+// Prepare the help modal
+const instructionsModal = document.getElementById('instructions-modal');
+const openInstructionsButton = document.getElementById('open-instructions-btn');
+const closeInstructionsButton = document.getElementById('close-instructions-btn');
+
+const setScrollLock = (locked) => {
+    document.documentElement.classList.toggle('no-scroll', locked);
+    document.body.classList.toggle('no-scroll', locked);
+};
+
+const closeModalSmoothly = () => {
+    if (!instructionsModal.open || instructionsModal.classList.contains('is-closing')) {
+        return;
+    }
+
+    instructionsModal.classList.add('is-closing');
+
+    setTimeout(() => {
+        instructionsModal.close();
+        instructionsModal.classList.remove('is-closing');
+        setScrollLock(false);
+    }, 200); // Matches the 0.2s duration in CSS
+};
+
+openInstructionsButton.addEventListener('click', () => {
+    setScrollLock(true);
+    instructionsModal.classList.remove('is-closing');
+    instructionsModal.showModal();
+});
+
+closeInstructionsButton.addEventListener('click', closeModalSmoothly);
+
+instructionsModal.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeModalSmoothly();
+});
+
+instructionsModal.addEventListener('click', (event) => {
+    const rect = instructionsModal.getBoundingClientRect();
+    const isInDialog = (
+        rect.top <= event.clientY &&
+        event.clientY <= rect.bottom &&
+        rect.left <= event.clientX &&
+        event.clientX <= rect.right
+    );
+
+    if (isInDialog) {
+        return;
+    }
+
+    closeModalSmoothly();
+});
+
 // Set up the initial availability
 updateTables();
 
