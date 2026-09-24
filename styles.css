@@ -18,9 +18,12 @@
     --border-color: #2a2e37;
     --border-focus: #c8aa6e;
 
+    --shadow-main: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --bg-backdrop: rgba(0, 0, 0, 0.75);
+
     --radius-sm: 4px;
     --radius-md: 8px;
-    --shadow-main: 0 10px 30px rgba(0, 0, 0, 0.5);
+
     --font-family: 'Cinzel', 'EB Garamond', 'Garamond', 'Georgia', serif;
 }
 
@@ -322,7 +325,7 @@ button {
 
 #download-button {
     background-color: var(--accent-gold);
-    color: #0f1115;
+    color: var(--bg-primary);
 }
 
 #download-button:hover:not(:disabled) {
@@ -379,7 +382,7 @@ button:disabled {
 .page-loader {
     position: fixed;
     inset: 0;
-    background-color: #0b0a08;
+    background-color: var(--bg-primary);
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -396,13 +399,13 @@ button:disabled {
     display: flex;
     align-items: center;
     justify-content: center;
-    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.35));
+    filter: drop-shadow(0 0 12px var(--accent-gold-dim));
 }
 
 .rune-ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgba(200, 162, 81, 0.25);
+    border: 1px solid var(--accent-gold-dim);
     box-sizing: border-box;
 }
 
@@ -411,8 +414,8 @@ button:disabled {
     height: 60px;
     top: 0;
     left: 5px;
-    border-top-color: #d4af37;
-    border-left-color: #c8a251;
+    border-top-color: var(--accent-gold-hover);
+    border-left-color: var(--accent-gold);
     animation: runeSpin 2.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 
@@ -421,8 +424,8 @@ button:disabled {
     height: 60px;
     top: 0;
     right: 5px;
-    border-top-color: #d4af37;
-    border-right-color: #c8a251;
+    border-top-color: var(--accent-gold-hover);
+    border-right-color: var(--accent-gold);
     animation: runeSpinReverse 2.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 
@@ -430,8 +433,8 @@ button:disabled {
     width: 68px;
     height: 68px;
     bottom: 0;
-    border-bottom-color: #f3e5ab;
-    border-left-color: #c8a251;
+    border-bottom-color:var(--accent-gold-hover);
+    border-left-color: var(--accent-gold);
     animation: runeSpin 3.2s linear infinite;
 }
 
@@ -442,12 +445,12 @@ button:disabled {
     background: linear-gradient(
             to bottom,
             transparent,
-            #d4af37 20%,
-            #f3e5ab 50%,
-            #d4af37 80%,
+            var(--accent-gold) 20%,
+            var(--accent-gold-hover) 50%,
+            var(--accent-gold) 80%,
             transparent
     );
-    box-shadow: 0 0 8px #d4af37;
+    box-shadow: 0 0 8px var(--accent-gold-dim);
     animation: arcPulse 1.8s ease-in-out infinite alternate;
 }
 
@@ -455,8 +458,8 @@ button:disabled {
     font-size: 0.85rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #c8a251;
-    text-shadow: 0 0 10px rgba(200, 162, 81, 0.4);
+    color: var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-gold-dim);
     animation: textGlow 1.8s ease-in-out infinite alternate;
 }
 
@@ -505,11 +508,11 @@ button:disabled {
 
 .replacement-warning-content {
     overflow: hidden;
-    background-color: rgba(200, 162, 81, 0.08);
-    border-left: 2px solid var(--accent-gold-dim, #c8a251);
+    background-color: var(--accent-gold-dim);
+    border-left: 2px solid var(--accent-gold);
     border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
 
-    color: #e2d3b4;
+    color: var(--text-primary);
     font-size: 0.85rem;
     line-height: 1.5;
     padding: 0 0.8rem;
@@ -543,14 +546,14 @@ button:disabled {
     align-items: center;
     justify-content: center;
 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 12px var(--shadow-main);
     transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .help-btn-floating:hover {
     background-color: var(--bg-surface-hover);
     border-color: var(--accent-gold-hover);
-    color: #fff;
+    color: white;
     box-shadow: 0 0 16px var(--accent-gold-dim);
 }
 
@@ -594,7 +597,7 @@ button:disabled {
 }
 
 .instructions-modal::backdrop {
-    background: rgba(0, 0, 0, 0.75);
+    background: var(--bg-backdrop);
     backdrop-filter: blur(3px);
     opacity: 0;
     transition: opacity 0.2s ease-out, display 0.2s allow-discrete, overlay 0.2s allow-discrete;
