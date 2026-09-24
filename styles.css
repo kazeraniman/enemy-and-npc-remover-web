@@ -21,7 +21,7 @@
     --radius-sm: 4px;
     --radius-md: 8px;
     --shadow-main: 0 10px 30px rgba(0, 0, 0, 0.5);
-    --font-family: 'Cinzel', 'Garamond', 'Georgia', serif;
+    --font-family: 'Cinzel', 'EB Garamond', 'Garamond', 'Georgia', serif;
 }
 
 /* ==========================================================================
@@ -43,6 +43,12 @@ body {
     margin: 0 auto;
 }
 
+input,
+select,
+button {
+    font-family: inherit;
+}
+
 /* ==========================================================================
    Helpers
    ========================================================================== */
@@ -58,7 +64,6 @@ h1 {
     font-weight: 700;
     color: var(--accent-gold);
     text-transform: uppercase;
-    letter-spacing: 1px;
     text-align: center;
 }
 
