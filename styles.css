@@ -474,3 +474,38 @@ button:disabled {
     visibility: hidden;
     pointer-events: none;
 }
+
+/* ==========================================================================
+   Warning
+   ========================================================================== */
+.replacement-warning-container {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.25s ease, opacity 0.25s ease, margin-top 0.25s ease;
+    margin-top: 0;
+}
+
+.replacement-type-group:has(option[value="empty"]:checked) .replacement-warning-container {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 0.6rem;
+}
+
+.replacement-warning-content {
+    overflow: hidden;
+    background-color: rgba(200, 162, 81, 0.08);
+    border-left: 2px solid var(--accent-gold-dim, #c8a251);
+    border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
+
+    color: #e2d3b4;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    padding: 0 0.8rem;
+    transition: padding 0.25s ease;
+}
+
+.replacement-type-group:has(option[value="empty"]:checked) .replacement-warning-content {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}

@@ -48,12 +48,18 @@
 </div>
 
 <h2>Replaced Enemies / NPCs</h2>
-<div class="bot-gap">
+<div class="replacement-type-group bot-gap">
     <label for="replacement-type">Replacement Type</label>
     <select id="replacement-type">
         <option value="turtle" selected>Turtle</option>
         <option value="empty">Empty</option>
     </select>
+
+    <div id="replacement-type-warning" class="replacement-warning-container" aria-live="polite">
+        <div class="replacement-warning-content">
+            Empty is not recommended as softlocks could occur if the entity is needed (e.g. drops a key item). Empty can also result in slower load times. That being said, the decision is yours.
+        </div>
+    </div>
 </div>
 <div class="table-container bot-gap">
     <table id="replaced-table">
