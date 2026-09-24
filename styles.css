@@ -433,7 +433,7 @@ button:disabled {
     width: 68px;
     height: 68px;
     bottom: 0;
-    border-bottom-color:var(--accent-gold-hover);
+    border-bottom-color: var(--accent-gold-hover);
     border-left-color: var(--accent-gold);
     animation: runeSpin 3.2s linear infinite;
 }
@@ -464,23 +464,41 @@ button:disabled {
 }
 
 @keyframes runeSpin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes runeSpinReverse {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(-360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
 }
 
 @keyframes arcPulse {
-    0% { opacity: 0.3; transform: scaleY(0.85); }
-    100% { opacity: 1; transform: scaleY(1.05); }
+    0% {
+        opacity: 0.3;
+        transform: scaleY(0.85);
+    }
+    100% {
+        opacity: 1;
+        transform: scaleY(1.05);
+    }
 }
 
 @keyframes textGlow {
-    0% { opacity: 0.3; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .page-loader.hidden {
