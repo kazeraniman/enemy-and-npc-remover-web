@@ -1,8 +1,14 @@
 # Elden Ring Enemy and NPC Remover
-The web version of an Elden Ring mod which helps removes any selected NPC / enemy, whether to aid with phobias or for other reasons. The desktop version may be found [here](https://github.com/kazeraniman/NpcRemover).
+An Elden Ring mod which helps removes any selected NPC / enemy, whether to aid with phobias or for other reasons.
 
 ## Concept
 The [original mod](https://www.nexusmods.com/eldenring/mods/4392) worked by replacing the files for a given character using [ModEngine2](https://github.com/soulsmods/ModEngine2). While the original mod works perfectly, it requires the user to find the ID of the enemy or NPC they wish to replace and then rename the files to that ID. This adds a bit of friction to the experience. This mod tries to help with this by providing a website which lets you pick the from a list of all entities and then provides you with the files to put in the mod folder to replace them. If you do not wish to run scripts on your computer, and just for general ease-of-use, I encourage using this version over the desktop version.
+
+## Webpage
+The current, live page may be viewed [here](https://kazeraniman.github.io/enemy-and-npc-remover-web/).
+
+## Desktop Version
+Want to use the tool offline, or want a desktop version for any other reason? Find it [here](https://github.com/kazeraniman/NpcRemover).
 
 ## Pre-requisites
 Make sure to install [ModEngine2](https://github.com/soulsmods/ModEngine2) as that is what will use the generate files to replace the characters. Follow the instructions on the page.
