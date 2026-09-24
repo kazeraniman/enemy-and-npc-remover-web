@@ -2,6 +2,7 @@
 const IS_GITHUB_PAGES = window.location.hostname.endsWith('.github.io');
 const MINIMUM_INITIAL_LOAD_MS = 1000;
 const MINIMUM_DOWNLOAD_LOAD_MS = 600;
+const FILTER_DEBOUNCE_MS = 300;
 const FILE_NAMES = ['name.anibnd.dcx', 'name.chrbnd.dcx', 'name_h.texbnd.dcx', 'name_l.texbnd.dcx'];
 const COUNTER_API_BASE_URL = 'https://abacus.jasoncameron.dev'
 const COUNTER_NAMESPACE = IS_GITHUB_PAGES ? 'elden-ring-enemy-and-npc-remover' : 'elden-ring-enemy-and-npc-remover-dev';
@@ -92,7 +93,7 @@ downloadButton.addEventListener('click', async () => {
 
 // Prepare filtering
 const filterText = document.getElementById('available-filter');
-filterText.addEventListener('input', debounce(updateAvailableTable, 500));
+filterText.addEventListener('input', debounce(updateAvailableTable, FILTER_DEBOUNCE_MS));
 
 // Prepare the help modal
 const instructionsModal = document.getElementById('instructions-modal');
