@@ -1,11 +1,12 @@
 // Constants
+const IS_GITHUB_PAGES = window.location.hostname.endsWith('.github.io');
 const MINIMUM_LOAD_MS = 1000;
 const FILE_NAMES = ['name.anibnd.dcx', 'name.chrbnd.dcx', 'name_h.texbnd.dcx', 'name_l.texbnd.dcx'];
 const COUNTER_API_BASE_URL = 'https://abacus.jasoncameron.dev'
-const COUNTER_NAMESPACE = 'elden-ring-enemy-and-npc-remover';
+const COUNTER_NAMESPACE = IS_GITHUB_PAGES ? 'elden-ring-enemy-and-npc-remover' : 'elden-ring-enemy-and-npc-remover-dev';
 const COUNTER_API_URL = (counterName, endpoint) => `${COUNTER_API_BASE_URL}/${endpoint}/${COUNTER_NAMESPACE}/${counterName}`;
-const COUNTER_VISIT_KEY = 'visittest';
-const COUNTER_DOWNLOAD_KEY = 'downloadtest';
+const COUNTER_VISIT_KEY = 'visit';
+const COUNTER_DOWNLOAD_KEY = 'download';
 const VISIT_ELEMENT_ID = 'visitor-count';
 const DOWNLOAD_ELEMENT_ID = 'download-count'
 
