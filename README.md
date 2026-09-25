@@ -1,8 +1,8 @@
-# Elden Ring Enemy and NPC Remover
-An Elden Ring mod which helps removes any selected NPC / enemy, whether to aid with phobias or for other reasons.
+# Elden Ring Enemy & NPC Remover
+An Elden Ring mod which helps remove any selected enemies / NPCs, whether to aid with phobias or for other reasons.
 
 ## Concept
-The [original mod](https://www.nexusmods.com/eldenring/mods/4392) worked by replacing the files for a given character using [ModEngine2](https://github.com/soulsmods/ModEngine2). While the original mod works perfectly, it requires the user to find the ID of the enemy or NPC they wish to replace and then rename the files to that ID. This adds a bit of friction to the experience. This mod tries to help with this by providing a website which lets you pick the from a list of all entities and then provides you with the files to put in the mod folder to replace them. If you do not wish to run scripts on your computer, and just for general ease-of-use, I encourage using this version over the desktop version.
+The [original mod](https://www.nexusmods.com/eldenring/mods/4392) worked by replacing the files for a given character using [ModEngine2](https://github.com/soulsmods/ModEngine2). While the original mod works perfectly, it requires the user to find the ID of the enemy or NPC they wish to replace and then rename the files to that ID. This adds a bit of friction to the experience. This mod tries to help with this by providing a website which lets you pick from a list of all entities and then provides you with the files to put in the mod folder to replace them. If you do not wish to run scripts on your computer, and just for general ease-of-use, I encourage using this version over the desktop version.
 
 ## Webpage
 The current, live page may be viewed [here](https://kazeraniman.github.io/enemy-and-npc-remover-web/).
@@ -23,7 +23,7 @@ A button is provided on the webpage to display the usage instructions, but they 
 6. Navigate to the extracted files and copy all of them. This should not include any folders; just the files. The only things copied should be `.dcx` files.
 7. Navigate to the `mod` folder where you have installed ModEngine2. Please keep in mind this should be the `mod` folder inside ModEngine2, not the ModEngine2 folder itself.
 8. Navigate to the `chr` folder inside the `mod` folder. If it does not exist, create it first. Ensure it is called exactly `chr`.
-9. Paste all the copied files into this folder.
+9. Paste all the copied files into this folder. You can now go back and delete the zip file and the extracted files from before if you would like.
 10. Launch your game the normal way you do with ModEngine2 and confirm that everything is working as intended. You will not need to follow the previous steps again unless you want to change the replacements.
 
 ## Attribution
