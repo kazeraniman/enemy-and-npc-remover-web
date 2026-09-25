@@ -226,6 +226,8 @@ th, td {
     text-overflow: ellipsis;
     border-bottom: 1px solid var(--border-color);
     line-height: 1;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 tr:last-child td {
